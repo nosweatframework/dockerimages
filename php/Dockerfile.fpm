@@ -4,5 +4,18 @@ ARG PHP_VERSION=7.4
 
 LABEL tag="16nsk/php:fpm"
 
+ENV PM=dynamic
+ENV PM_START_SERVERS=2
+ENV PM_MIN_SPARE_SERVERS=1
+ENV PM_MAX_SPARE_SERVERS=3
+ENV PM_PROCESS_IDLE_TIMEOUT=10s
+ENV ACCESS_FORMAT="%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
+ENV REQUEST_SLOWLOG_TIMEOUT=0
+ENV REQUEST_SLOWLOG_TRACE_DEPTH=20
+ENV REQUEST_TERMINATE_TIMEOUT=0
+
 RUN apt-get install --no-install-recommends -y \
     php${PHP_VERSION}-fpm
+
+COPY php.ini /etc/php/${PHP_VERSION}/fpm/php.ini
+COPY php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
