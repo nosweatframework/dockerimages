@@ -9,7 +9,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 LABEL maintainer="Madalin Ignisca <hi@madalin.me>"
 LABEL description="PHP image to run PHPFPM or PHP Workers, suitable for Laravel, but not only"
 LABEL repo="https://github.com/madalinignisca/dockerimages"
-LABEL tag="16nsk/php"
 
 ENV PRECISION=14
 ENV OUTPUT_BUFFERING=4096
