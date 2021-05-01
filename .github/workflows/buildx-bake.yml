@@ -28,8 +28,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Concatenate Dockerfiles
         run: |
-          cat php/Dockerfile php/Dockerfile.cli > php/Dockerfile.cli
-          cat php/Dockerfile php/Dockerfile.fpm > php/Dockerfile.fpm
+          cat php/Dockerfile php/Dockerfile.cli > php/Dockerfile.cli-bake
+          cat php/Dockerfile php/Dockerfile.fpm > php/Dockerfile.fpm-bake
       -
         name: Generate bake file
         run: |
@@ -49,14 +49,14 @@ jobs:
           }
           target "php-fpm" {
               inherits=["default"]
-              dockerfile="php/Dockerfile.fpm"
+              dockerfile="php/Dockerfile.fpm-bake"
               tags = [
                   "16nsk/php:fpm",
               ]
           }
           target "php-cli" {
               inherits=["default"]
-              dockerfile="php/Dockerfile.cli"
+              dockerfile="php/Dockerfile.cli-bake"
               tags = [
                   "16nsk/php:cli",
               ]
