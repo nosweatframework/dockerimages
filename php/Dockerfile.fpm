@@ -18,4 +18,5 @@ RUN apt-get install --no-install-recommends -y \
     php${PHP_VERSION}-fpm
 
 COPY php.ini /etc/php/${PHP_VERSION}/fpm/php.ini
+COPY php.ini /etc/php/${PHP_VERSION}/cli/php.ini
 COPY php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf

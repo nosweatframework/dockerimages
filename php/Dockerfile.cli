@@ -10,3 +10,5 @@ RUN apt-get install --no-install-recommends -y \
     php${PHP_VERSION}-memcached \
     php${PHP_VERSION}-soap \
     php${PHP_VERSION}-zip
+
+COPY php.ini /etc/php/${PHP_VERSION}/cli/php.ini
