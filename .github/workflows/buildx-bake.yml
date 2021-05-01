@@ -26,10 +26,30 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Concatenate Dockerfiles
+      -
+        name: Generate bake file for base
         run: |
-          cat php/Dockerfile php/Dockerfile.cli > php/Dockerfile.cli-bake
-          cat php/Dockerfile php/Dockerfile.fpm > php/Dockerfile.fpm-bake
+          cat <<'EOF' > docker-bake-base.hcl
+          group "default" {
+              targets = [
+                  "php",
+              ]
+          }
+          target "default" {
+              context="./php/"
+              platforms = [
+                  "linux/amd64",
+                  "linux/arm64",
+              ]
+          }
+          target "php" {
+              inherits=["default"]
+              dockerfile="Dockerfile"
+              tags = [
+                  "16nsk/php",
+              ]
+          }
+          EOF
       -
         name: Generate bake file
         run: |
@@ -67,4 +87,6 @@ jobs:
         uses: docker/bake-action@master
         with:
           push: true
-          files: docker-bake.hcl
+          files:
+            - docker-bake-base.hcl
+            - docker-bake.hcl
