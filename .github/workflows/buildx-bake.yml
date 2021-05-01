@@ -69,14 +69,14 @@ jobs:
           }
           target "php-fpm" {
               inherits=["default"]
-              dockerfile="Dockerfile.fpm-bake"
+              dockerfile="Dockerfile.fpm"
               tags = [
                   "16nsk/php:fpm",
               ]
           }
           target "php-cli" {
               inherits=["default"]
-              dockerfile="Dockerfile.cli-bake"
+              dockerfile="Dockerfile.cli"
               tags = [
                   "16nsk/php:cli",
               ]
