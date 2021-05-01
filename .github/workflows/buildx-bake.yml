@@ -28,8 +28,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Concatenate Dockerfiles
         run: |
-        cat php/Dockerfile php/Dockerfile.cli > php/Dockerfile.cli
-        cat php/Dockerfile php/Dockerfile.fpm > php/Dockerfile.fpm
+          cat php/Dockerfile php/Dockerfile.cli > php/Dockerfile.cli
+          cat php/Dockerfile php/Dockerfile.fpm > php/Dockerfile.fpm
       -
         name: Generate bake file
         run: |
