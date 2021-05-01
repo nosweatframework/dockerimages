@@ -4,6 +4,7 @@ ARG PHP_VERSION=7.4
 ARG USERNAME=app
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
+ARG DEBIAN_FRONTEND=noninteractive
 
 LABEL maintainer="Madalin Ignisca <hi@madalin.me>"
 LABEL description="PHP image to run PHPFPM or PHP Workers, suitable for Laravel, but not only"

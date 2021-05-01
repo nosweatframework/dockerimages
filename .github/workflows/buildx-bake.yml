@@ -55,14 +55,16 @@ jobs:
           }
 
           target "php-fpm" {
-              inherits=["php"]
+              inherits=["default"]
+              dockerfile="php/Dockerfile.fpm"
               tags = [
                   "16nsk/php:fpm",
               ]
           }
 
           target "php-cli" {
-              inherits=["php"]
+              inherits=["default"]
+              dockerfile="php/Dockerfile.cli"
               tags = [
                   "16nsk/php:cli",
               ]
