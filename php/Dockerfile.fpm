@@ -25,4 +25,5 @@ COPY php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
 STOPSIGNAL SIGQUIT
 
 EXPOSE 9000
+EXPOSE 9001
 CMD ["php-fpm"]
