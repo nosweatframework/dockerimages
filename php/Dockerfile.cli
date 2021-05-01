@@ -1,0 +1,13 @@
+FROM 16nsk/php
+
+ARG PHP_VERSION=7.4
+
+LABEL tag="16nsk/php:cli"
+
+RUN apt-get install --no-install-recommends -y \
+    php${PHP_VERSION}-cli \
+    php${PHP_VERSION}-gd \
+    php${PHP_VERSION}-imagick \
+    php${PHP_VERSION}-memcached \
+    php${PHP_VERSION}-soap \
+    php${PHP_VERSION}-zip

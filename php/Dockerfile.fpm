@@ -1,0 +1,8 @@
+FROM 16nsk/php
+
+ARG PHP_VERSION=7.4
+
+LABEL tag="16nsk/php:fpm"
+
+RUN apt-get install --no-install-recommends -y \
+    php${PHP_VERSION}-fpm
