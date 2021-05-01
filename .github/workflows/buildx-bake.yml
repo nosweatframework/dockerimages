@@ -83,8 +83,14 @@ jobs:
           }
           EOF
       -
+        name: Build and push base
+        uses: docker/bake-action@master
+        with:
+          push: true
+          files: docker-bake-base.hcl
+      -
         name: Build and push
         uses: docker/bake-action@master
         with:
           push: true
-          files: docker-bake-base.hcl, docker-bake.hcl
+          files: docker-bake.hcl
