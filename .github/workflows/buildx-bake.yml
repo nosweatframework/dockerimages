@@ -87,6 +87,4 @@ jobs:
         uses: docker/bake-action@master
         with:
           push: true
-          files:
-            docker-bake-base.hcl
-            docker-bake.hcl
+          files: docker-bake-base.hcl, docker-bake.hcl
