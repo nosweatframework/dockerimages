@@ -26,34 +26,27 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Concatenate Dockerfiles
+        run: |
+        cat php/Dockerfile php/Dockerfile.cli > php/Dockerfile.cli
+        cat php/Dockerfile php/Dockerfile.fpm > php/Dockerfile.fpm
       -
         name: Generate bake file
         run: |
           cat <<'EOF' > docker-bake.hcl
           group "default" {
               targets = [
-                  "php",
                   "php-fpm",
                   "php-cli",
               ]
           }
-
           target "default" {
-              context="."
+              context="./php/"
               platforms = [
                   "linux/amd64",
                   "linux/arm64"
               ]
           }
-
-          target "php" {
-              inherits=["default"]
-              dockerfile="php/Dockerfile"
-              tags = [
-                  "16nsk/php:latest",
-              ]
-          }
-
           target "php-fpm" {
               inherits=["default"]
               dockerfile="php/Dockerfile.fpm"
@@ -61,7 +54,6 @@ jobs:
                   "16nsk/php:fpm",
               ]
           }
-
           target "php-cli" {
               inherits=["default"]
               dockerfile="php/Dockerfile.cli"
