@@ -35,6 +35,8 @@ jobs:
           group "default" {
               targets = [
                   "php",
+                  "8.0",
+                  "7.3",
               ]
           }
           target "default" {
@@ -49,7 +51,28 @@ jobs:
               dockerfile="Dockerfile"
               tags = [
                   "16nsk/php",
+                  "16nsk/php:7.4",
               ]
+          }
+          target "8.0" {
+              inherits=["default"]
+              dockerfile="Dockerfile"
+              tags = [
+                  "16nsk/php:8.0",
+              ]
+              args = {
+                  PHP_VERSION="8.0"
+              }
+          }
+          target "7.3" {
+              inherits=["default"]
+              dockerfile="Dockerfile"
+              tags = [
+                  "16nsk/php:7.3",
+              ]
+              args = {
+                  PHP_VERSION="7.3"
+              }
           }
           EOF
       -
