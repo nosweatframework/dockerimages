@@ -53,46 +53,8 @@ jobs:
           }
           EOF
       -
-        name: Generate bake file
-        run: |
-          cat <<'EOF' > docker-bake.hcl
-          group "default" {
-              targets = [
-                  "php-fpm",
-                  "php-cli",
-              ]
-          }
-          target "default" {
-              context="./php/"
-              platforms = [
-                  "linux/amd64",
-                  "linux/arm64"
-              ]
-          }
-          target "php-fpm" {
-              inherits=["default"]
-              dockerfile="Dockerfile.fpm"
-              tags = [
-                  "16nsk/php:fpm",
-              ]
-          }
-          target "php-cli" {
-              inherits=["default"]
-              dockerfile="Dockerfile.cli"
-              tags = [
-                  "16nsk/php:cli",
-              ]
-          }
-          EOF
-      -
         name: Build and push base
         uses: docker/bake-action@master
         with:
           push: true
           files: docker-bake-base.hcl
-      -
-        name: Build and push
-        uses: docker/bake-action@master
-        with:
-          push: true
-          files: docker-bake.hcl
