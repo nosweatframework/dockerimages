@@ -71,6 +71,8 @@ RUN apt-get install --no-install-recommends -y \
     php${PHP_VERSION}-soap \
     php${PHP_VERSION}-xml \
     php${PHP_VERSION}-zip
+    
+RUN ln -s /usr/sbin/php-fpm${PHP_VERSION} /usr/sbin/php-fpm
 
 COPY php.ini /etc/php/${PHP_VERSION}/cli/php.ini
 COPY php.ini /etc/php/${PHP_VERSION}/fpm/php.ini
