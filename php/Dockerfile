@@ -34,6 +34,16 @@ ENV OPCACHE_ENABLE_FILE_OVERRIDE=0
 ENV OPCACHE_PRELOAD=
 ENV OPCACHE_PRELOAD_USER=
 
+ENV PM=dynamic
+ENV PM_START_SERVERS=2
+ENV PM_MIN_SPARE_SERVERS=1
+ENV PM_MAX_SPARE_SERVERS=3
+ENV PM_PROCESS_IDLE_TIMEOUT=10s
+ENV ACCESS_FORMAT="%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
+ENV REQUEST_SLOWLOG_TIMEOUT=0
+ENV REQUEST_SLOWLOG_TRACE_DEPTH=20
+ENV REQUEST_TERMINATE_TIMEOUT=0
+
 
 RUN groupadd --gid ${USER_GID} ${USERNAME} \
     && useradd --create-home --shell /bin/bash --uid ${USER_UID} --gid ${USER_GID} ${USERNAME}
@@ -48,12 +58,27 @@ RUN apt-get update \
 RUN apt-get install --no-install-recommends -y \
     php${PHP_VERSION}-apcu \
     php${PHP_VERSION}-bcmath \
+    php${PHP_VERSION}-cli \
     php${PHP_VERSION}-curl \
+    php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-gd \
     php${PHP_VERSION}-intl \
     php${PHP_VERSION}-mbstring \
+    php${PHP_VERSION}-memcached \
     php${PHP_VERSION}-mysql \
     php${PHP_VERSION}-pgsql \
     php${PHP_VERSION}-redis \
+    php${PHP_VERSION}-soap \
     php${PHP_VERSION}-xml \
     php${PHP_VERSION}-zip
+
+COPY php.ini /etc/php/${PHP_VERSION}/cli/php.ini
+COPY php.ini /etc/php/${PHP_VERSION}/fpm/php.ini
+COPY php.ini /etc/php/${PHP_VERSION}/cli/php.ini
+COPY php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
+
+STOPSIGNAL SIGQUIT
+
+EXPOSE 9000
+EXPOSE 9001
+CMD ["php-fpm"]
