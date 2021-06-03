@@ -1,6 +1,8 @@
 name: buildx
 
 on:
+  schedule:
+    - cron:  '30 3 * * 6'
   push:
     branches: main
 
