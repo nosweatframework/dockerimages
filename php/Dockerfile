@@ -69,7 +69,6 @@ RUN apt-get install --no-install-recommends -y \
     php${PHP_VERSION}-mysql \
     php${PHP_VERSION}-pgsql \
     php${PHP_VERSION}-redis \
-    php${PHP_VERSION}-soap \
     php${PHP_VERSION}-xml \
     php${PHP_VERSION}-zip
     
