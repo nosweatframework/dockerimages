@@ -3,7 +3,7 @@
 Create in your project a Dockerfile with something like this:
 
 ```
-FROM 16nsk/laravel:octane
+FROM 16nsk/laravel
 
 COPY . /app
 WORKDIR /app
