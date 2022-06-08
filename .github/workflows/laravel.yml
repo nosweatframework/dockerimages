@@ -1,6 +1,9 @@
 name: Laravel
 
 on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '30 3 * * *'
   push:
     branches:
       - 'main'
@@ -24,11 +27,6 @@ jobs:
           tags: |
             type=schedule
             type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
