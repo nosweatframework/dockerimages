@@ -1,4 +1,4 @@
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=8.1
 
 FROM php:${PHP_VERSION}-fpm
 
@@ -63,7 +63,35 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 
 RUN chmod +x /usr/local/bin/install-php-extensions
 
-RUN install-php-extensions gd xdebug
+RUN install-php-extensions \
+    amqp \
+    apcu \
+    bcmath \
+    bz2 \
+    calendar \
+    decimal \
+    exif \
+    gd \
+    gettext \
+    gmp \
+    imagick \
+    intl \
+    ldap \
+    mysqli \
+    opcache \
+    openswoole \
+    pcntl \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    redis \
+    sockets \
+    sysvmsg \
+    sysvsem \
+    sysvshm \
+    tidy \
+    xsl \
+    zip
 
 RUN groupadd --gid ${USER_GID} ${USERNAME} \
     && useradd --create-home --shell /bin/bash --uid ${USER_UID} --gid ${USER_GID} ${USERNAME}
@@ -73,6 +101,8 @@ COPY php-fpm.conf /etc/local/etc/php-fpm.conf
 
 STOPSIGNAL SIGQUIT
 
+USER ${USERNAME}
+
 EXPOSE 9000
 EXPOSE 9001
-CMD ["php-fpm"]
+CMD ["php"]
