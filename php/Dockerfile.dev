@@ -1,0 +1,7 @@
+ARG PHP_VERSION=8.1
+
+FROM nosweatframework/php:${PHP_VERSION}
+
+RUN install-php-extensions @composer
+
+RUN install-php-extensions blackfire xdebug xhprof
