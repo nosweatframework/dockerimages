@@ -1,14 +1,15 @@
-FROM ubuntu:20.04
+ARG PHP_VERSION=8.2
 
-ARG PHP_VERSION=7.4
-ARG USERNAME=app
+FROM php:${PHP_VERSION}-fpm
+
+ARG USERNAME=php
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
 ARG DEBIAN_FRONTEND=noninteractive
 
-LABEL maintainer="Madalin Ignisca <hi@madalin.me>"
-LABEL description="PHP image to run PHPFPM or PHP Workers, suitable for Laravel, but not only"
-LABEL repo="https://github.com/madalinignisca/dockerimages"
+LABEL maintainer="Madalin Ignisca <git@madalin.me>"
+LABEL description="PHP image to run PHPFPM or PHP Workers"
+LABEL repo="https://github.com/nosweatframework/dockerimages"
 
 ENV PRECISION=14
 ENV OUTPUT_BUFFERING=4096
@@ -21,7 +22,20 @@ ENV LOG_ERROR_MAX_LEN=1024
 ENV POST_MAX_SIZE=8M
 ENV UPLOAD_MAX_FILESIZE=2M
 ENV MAX_FILE_UPLOADS=20
+ENV ALLOW_URL_FOPEN=On
+ENV DEFAULT_SOCKET_TIMEOUT=60
 ENV DATE_TIMEZONE=UTC
+ENV MYSQLI_MAX_PERSISTENT=-1
+ENV MYSQLI_MAX_LINKS=-1
+ENV MYSQLND_COLLECT_STATISTICS=On
+ENV MYSQLND_COLLECT_MEMORY_STATISTICS=Off
+ENV PGSQL_MAX_PERSISTENT=-1
+ENV PGSQL_MAX_LINKS=-1
+ENV SESSION_SAVE_HANDLER=files
+ENV SESSION_NAME="PHPSESSID"
+ENV LDAP_MAX_LINKS=-1
+ENV OPCACHE_ENABLE=1
+ENV OPCACHE_ENABLE_CLI=0
 ENV OPCACHE_MEMORY_CONSUMPTION=128
 ENV OPCACHE_INTERNED_STRINGS_BUFFER=8
 ENV OPCACHE_MAX_ACCELERATED_FILES=10000
@@ -45,39 +59,17 @@ ENV REQUEST_SLOWLOG_TIMEOUT=0
 ENV REQUEST_SLOWLOG_TRACE_DEPTH=20
 ENV REQUEST_TERMINATE_TIMEOUT=0
 
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions
+
+RUN install-php-extensions gd xdebug
 
 RUN groupadd --gid ${USER_GID} ${USERNAME} \
     && useradd --create-home --shell /bin/bash --uid ${USER_UID} --gid ${USER_GID} ${USERNAME}
 
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install --no-install-recommends -y \
-      gnupg \
-      software-properties-common \
-    && LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
-
-RUN apt-get install --no-install-recommends -y \
-    php${PHP_VERSION}-apcu \
-    php${PHP_VERSION}-bcmath \
-    php${PHP_VERSION}-cli \
-    php${PHP_VERSION}-curl \
-    php${PHP_VERSION}-fpm \
-    php${PHP_VERSION}-gd \
-    php${PHP_VERSION}-intl \
-    php${PHP_VERSION}-mbstring \
-    php${PHP_VERSION}-memcached \
-    php${PHP_VERSION}-mysql \
-    php${PHP_VERSION}-pgsql \
-    php${PHP_VERSION}-redis \
-    php${PHP_VERSION}-xml \
-    php${PHP_VERSION}-zip
-    
-RUN ln -s /usr/sbin/php-fpm${PHP_VERSION} /usr/sbin/php-fpm
-
-COPY php.ini /etc/php/${PHP_VERSION}/cli/php.ini
-COPY php.ini /etc/php/${PHP_VERSION}/fpm/php.ini
-COPY php.ini /etc/php/${PHP_VERSION}/cli/php.ini
-COPY php-fpm.conf /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
+COPY php.ini /usr/local/etc/php/php.ini
+COPY php-fpm.conf /etc/local/etc/php-fpm.conf
 
 STOPSIGNAL SIGQUIT
 
