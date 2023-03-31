@@ -50,7 +50,7 @@ jobs:
               inherits=["default"]
               dockerfile="Dockerfile"
               tags = [
-                  "${{ vars.TAG_PREFIX }}/php:7.4",
+                  "${{ env.GITHUB_REPOSITORY_OWNER }}/php:7.4",
               ]
               args = {
                   PHP_VERSION="7.4"
@@ -60,7 +60,7 @@ jobs:
               inherits=["default"]
               dockerfile="Dockerfile"
               tags = [
-                  "${{ vars.TAG_PREFIX }}/php:8.2",
+                  "${{ env.GITHUB_REPOSITORY_OWNER }}/php:8.2",
               ]
               args = {
                   PHP_VERSION="8.2"
@@ -70,7 +70,7 @@ jobs:
               inherits=["default"]
               dockerfile="Dockerfile"
               tags = [
-                  "${{ vars.TAG_PREFIX }}/php:8.1",
+                  "${{ env.GITHUB_REPOSITORY_OWNER }}/php:8.1",
               ]
               args = {
                   PHP_VERSION="8.1"
