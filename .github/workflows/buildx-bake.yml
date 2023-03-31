@@ -43,6 +43,7 @@ jobs:
               context="./php/"
               platforms = [
                   "linux/amd64",
+                  "linux/arm64",
               ]
           }
           target "7.4" {
