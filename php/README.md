@@ -1,0 +1,3 @@
+# No Sweat Framework PHP container images
+
+First, we are using this images in our production on https://nosweat.cloud and the development versions to work on the projects. We do not add anything else, as everything is controlled using ENVIRONMENT VARIABLES. Yes, you can use them too, like we use them and have no issues. Make sure you know how to tune your php settings, as that is what makes the difference between a slow and a fast request in production from correct php settings.

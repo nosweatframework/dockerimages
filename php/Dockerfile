@@ -1,6 +1,9 @@
 ARG PHP_VERSION=8.1
+ARG ALPINE=
 
-FROM php:${PHP_VERSION}-fpm
+FROM php:${PHP_VERSION}-fpm${ALPINE}
+
+ARG COMPOSER_VERSION=2
 
 ARG USERNAME=php
 ARG USER_UID=1000
@@ -69,39 +72,44 @@ RUN install-php-extensions \
     bcmath \
     bz2 \
     calendar \
-    decimal \
     exif \
     gd \
     gettext \
     gmp \
+    igbinary \
     imagick \
     intl \
-    ldap \
+    mailparse \
+    memcached \
+    msgpack \
     mysqli \
+    oauth \
     opcache \
-    openswoole \
     pcntl \
+    pcov \
     pdo_mysql \
-    pdo_pgsql \
-    pgsql \
+#    propro \
+    pspell \
+    raphf \
     redis \
+    shmop \
+    soap \
     sockets \
     sysvmsg \
     sysvsem \
     sysvshm \
     tidy \
+    xmlrpc \
     xsl \
+    yaml \
     zip
 
-RUN groupadd --gid ${USER_GID} ${USERNAME} \
-    && useradd --create-home --shell /bin/bash --uid ${USER_UID} --gid ${USER_GID} ${USERNAME}
+RUN install-php-extensions @composer-$COMPOSER_VERSION
 
 COPY php.ini /usr/local/etc/php/php.ini
-COPY php-fpm.conf /etc/local/etc/php-fpm.conf
+COPY php-fpm.conf /usr/local/etc/php-fpm.conf
 
 STOPSIGNAL SIGQUIT
-
-USER ${USERNAME}
 
 EXPOSE 9000
 EXPOSE 9001
