@@ -35,15 +35,14 @@ jobs:
           group "default" {
               targets = [
                   "7.4",
-                  "8.0",
-                  "8.1"
+                  "8.1",
+                  "8.2"
               ]
           }
           target "default" {
               context="./php/"
               platforms = [
                   "linux/amd64",
-                  "linux/arm64",
               ]
           }
           target "7.4" {
@@ -56,14 +55,14 @@ jobs:
                   PHP_VERSION="7.4"
               }
           }
-          target "8.0" {
+          target "8.2" {
               inherits=["default"]
               dockerfile="Dockerfile"
               tags = [
-                  "16nsk/php:8.0",
+                  "16nsk/php:8.2",
               ]
               args = {
-                  PHP_VERSION="8.0"
+                  PHP_VERSION="8.2"
               }
           }
           target "8.1" {

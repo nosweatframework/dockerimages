@@ -104,6 +104,11 @@ RUN install-php-extensions \
     yaml \
     zip
 
+RUN if [ "$PHP_VERSION" = "7.4" ] ; \
+    then \
+        install-php-extensions propro ;
+    fi
+
 RUN install-php-extensions @composer-$COMPOSER_VERSION
 
 COPY php.ini /usr/local/etc/php/php.ini
