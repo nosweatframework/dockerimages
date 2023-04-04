@@ -1,4 +1,4 @@
-name: buildx
+name: php8.1
 
 on:
   schedule:
@@ -34,9 +34,7 @@ jobs:
           cat <<'EOF' > docker-bake-base.hcl
           group "default" {
               targets = [
-                  "7_4",
                   "8_1",
-                  "8_2"
               ]
           }
           target "default" {
@@ -45,26 +43,6 @@ jobs:
                   "linux/amd64",
                   "linux/arm64",
               ]
-          }
-          target "7_4" {
-              inherits=["default"]
-              dockerfile="Dockerfile"
-              tags = [
-                  "${{ github.repository_owner }}/php:7.4",
-              ]
-              args = {
-                  PHP_VERSION="7.4"
-              }
-          }
-          target "8_2" {
-              inherits=["default"]
-              dockerfile="Dockerfile"
-              tags = [
-                  "${{ github.repository_owner }}/php:8.2",
-              ]
-              args = {
-                  PHP_VERSION="8.2"
-              }
           }
           target "8_1" {
               inherits=["default"]
