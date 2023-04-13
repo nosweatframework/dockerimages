@@ -46,6 +46,7 @@ jobs:
               inherits=["default"]
               dockerfile="Dockerfile"
               tags = [
+                  "${{ github.repository_owner }}/php:7.4.33",
                   "${{ github.repository_owner }}/php:7.4",
               ]
               args = {
