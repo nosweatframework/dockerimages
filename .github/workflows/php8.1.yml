@@ -1,8 +1,6 @@
 name: php8.1
 
 on:
-  schedule:
-    - cron:  '30 3 * * 6'
   push:
     branches: main
 
@@ -49,9 +47,12 @@ jobs:
               dockerfile="Dockerfile"
               tags = [
                   "${{ github.repository_owner }}/php:8.1",
+                  "${{ github.repository_owner }}/php:8.1:17",
               ]
               args = {
-                  PHP_VERSION="8.1"
+                  PHP_VERSION="8.1.17"
+                  COMPOSER_VERSION="2.2.21"
+                  ALPINE="-alpine"
               }
           }
           EOF
