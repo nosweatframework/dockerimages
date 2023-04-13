@@ -47,7 +47,7 @@ jobs:
               dockerfile="Dockerfile"
               tags = [
                   "${{ github.repository_owner }}/php:8.1",
-                  "${{ github.repository_owner }}/php:8.1:17",
+                  "${{ github.repository_owner }}/php:8.1.17",
               ]
               args = {
                   PHP_VERSION="8.1.17"
