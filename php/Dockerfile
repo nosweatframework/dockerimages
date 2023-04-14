@@ -87,6 +87,7 @@ RUN install-php-extensions \
     mysqli \
     oauth \
     opcache \
+    openswoole \
     pcntl \
     pcov \
     pdo_mysql \
