@@ -2,7 +2,8 @@ name: php7.4
 
 on:
   push:
-    branches: main
+    tags:
+      - 7.4.*
 
 jobs:
   buildx:
