@@ -1,8 +1,8 @@
 ARG PHP_VERSION=8.1
-ARG ALPINE=
 
-FROM php:${PHP_VERSION}-fpm${ALPINE}
+FROM php:${PHP_VERSION}-fpm-alpine
 
+ARG PHP_VERSION=8.1
 ARG COMPOSER_VERSION=2
 
 ARG USERNAME=php
@@ -113,6 +113,8 @@ RUN if [ "$PHP_VERSION" = "7.4" ] ; \
     fi
 
 RUN install-php-extensions @composer-$COMPOSER_VERSION
+
+RUN apk add --no-cache git patch
 
 COPY php.ini /usr/local/etc/php/php.ini
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
