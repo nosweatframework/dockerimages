@@ -48,12 +48,11 @@ jobs:
               dockerfile="Dockerfile"
               tags = [
                   "${{ github.repository_owner }}/php:8.1",
-                  "${{ github.repository_owner }}/php:8.1.18",
+                  "${{ github.repository_owner }}/php:8.1.19",
               ]
               args = {
-                  PHP_VERSION="8.1.18"
+                  PHP_VERSION="8.1.19"
                   COMPOSER_VERSION="2.2.21"
-                  ALPINE="-alpine"
               }
           }
           EOF
