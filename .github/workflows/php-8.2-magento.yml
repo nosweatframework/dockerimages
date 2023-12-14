@@ -1,0 +1,34 @@
+name: Build PHP 8.2 for Magento 2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  buildx:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up SSH
+        uses: MrSquaare/ssh-setup-action@v3
+        with:
+          host: ${{ secrets.SSH_ARM64_HOST }}
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          private-key-name: ssh-arm64-host
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: amd64
+          append: |
+            - endpoint: ssh://${{ secrets.SSH_ARM64_USER }}@${{ secrets.SSH_ARM64_HOST }}
+              platforms: arm64
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/bake-action@v4
+        with:
+          push: true
+          workdir: php/8.2-magento
