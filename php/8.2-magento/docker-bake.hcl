@@ -11,7 +11,7 @@ target "default" {
         "linux/arm64"
     ]
     tags = [
-        "nosweatframework/php:8.2.13-magento"
-        "nosweatframework/php:8.2-magento",
+        "nosweatframework/php:8.2.13-magento",
+        "nosweatframework/php:8.2-magento"
     ]
 }

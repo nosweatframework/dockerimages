@@ -1,6 +1,7 @@
 FROM php:8.2.13-fpm-bookworm
 
 COPY --from=mlocati/php-extension-installer:2.1.69 /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=composer:2.2.22 /usr/bin/composer /usr/local/bin/
 
 RUN /usr/local/bin/install-php-extensions \
     apcu \
